@@ -16,7 +16,7 @@ project(raytracer)
 # This define is used by the teaching team to compile and run the official solution
 # Students: for your project this define should always be commented out
 # If we commit it by mistake please disable it and let us know
-add_compile_options(-DCOURSE_SOLUTION)
+#add_compile_options(-DCOURSE_SOLUTION)
 
 
 # When testing large scenes the debug mode will be very slow
