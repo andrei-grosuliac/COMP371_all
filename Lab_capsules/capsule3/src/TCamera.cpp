@@ -45,8 +45,15 @@ TCamera& TCamera::operator=(const TCamera& c){
 
 void  TCamera::ApplyView(int pick){
  
- 
+ // TA: PLay with the order by uncommenting various lines
+   // view = glm::mat4(1.0);
+   // view = glm::translate(view, glm::vec3(3, 3, 0));
+    
+    
 	gview = zoom * view * tball.getMatrix();
+   // gview = tball.getMatrix() * view * zoom;
+   // gview = zoom * tball.getMatrix()  * view;
+    // gview = view * tball.getMatrix()  * zoom;
 
  
 
@@ -56,6 +63,7 @@ void  TCamera::resetview(){
 	view = glm::mat4(1.0);
     zoom = glm::mat4(1.0);
     scroll_zoom  = 0.0;
+    
 }
 
 void  TCamera::resetproj(){
