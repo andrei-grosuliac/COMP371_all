@@ -1,0 +1,3 @@
+/COMP371/COMP371_RaytracerBase/code/build/CMakeFiles/rebuild_cache.dir
+/COMP371/COMP371_RaytracerBase/code/build/CMakeFiles/edit_cache.dir
+/COMP371/COMP371_RaytracerBase/code/build/CMakeFiles/raytracer.dir
