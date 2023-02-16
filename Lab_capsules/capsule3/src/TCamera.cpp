@@ -1,4 +1,3 @@
-
 #include "TCamera.h"
 #include <iostream>
 #include <stdio.h>
