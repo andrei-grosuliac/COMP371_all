@@ -4,7 +4,6 @@
 CMakeFiles/raytracer.dir/external/simpleppm.cpp.o: ../external/simpleppm.cpp
 CMakeFiles/raytracer.dir/external/simpleppm.cpp.o: ../external/simpleppm.h
 
-CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: ../external/test_eigen.cpp
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -212,10 +211,8 @@ CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/sr
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/external/test_eigen.cpp.o: ../external/test_eigen.cpp
 
-CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/json.hpp
-CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/simpleppm.h
-CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/test_json.cpp
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -423,10 +420,10 @@ CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/src
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/external/test_json.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/json.hpp
+CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/simpleppm.h
+CMakeFiles/raytracer.dir/external/test_json.cpp.o: ../external/test_json.cpp
 
-CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/json.hpp
-CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/simpleppm.h
-CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/test_ppm.cpp
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -634,18 +631,10 @@ CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/src/
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/json.hpp
+CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/simpleppm.h
+CMakeFiles/raytracer.dir/external/test_ppm.cpp.o: ../external/test_ppm.cpp
 
-CMakeFiles/raytracer.dir/main.cpp.o: ../external/json.hpp
-CMakeFiles/raytracer.dir/main.cpp.o: ../external/simpleppm.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../main.cpp
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/AreaLight.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/Light.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/PointLight.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/Ray.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/RayTracer.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/Rectangle.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/Shape.h
-CMakeFiles/raytracer.dir/main.cpp.o: ../src/Sphere.h
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -853,10 +842,16 @@ CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/src/plugins/Commo
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/main.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../external/json.hpp
+CMakeFiles/raytracer.dir/main.cpp.o: ../external/simpleppm.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../main.cpp
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/Light.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/Ray.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/RayTracer.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/Rectangle.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/Shape.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/Sphere.h
 
-CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/AreaLight.cpp
-CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/AreaLight.h
-CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/Light.h
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -1064,9 +1059,10 @@ CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/src/plug
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/AreaLight.cpp
+CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/AreaLight.h
+CMakeFiles/raytracer.dir/src/AreaLight.cpp.o: ../src/Light.h
 
-CMakeFiles/raytracer.dir/src/Light.cpp.o: ../src/Light.cpp
-CMakeFiles/raytracer.dir/src/Light.cpp.o: ../src/Light.h
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -1274,10 +1270,9 @@ CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/src/plugins/
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/Light.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/Light.cpp.o: ../src/Light.cpp
+CMakeFiles/raytracer.dir/src/Light.cpp.o: ../src/Light.h
 
-CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/Light.h
-CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/PointLight.cpp
-CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/PointLight.h
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -1485,18 +1480,10 @@ CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/src/plu
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/Light.h
+CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/PointLight.cpp
+CMakeFiles/raytracer.dir/src/PointLight.cpp.o: ../src/PointLight.h
 
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/json.hpp
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/simpleppm.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/AreaLight.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Light.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/PointLight.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Ray.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/RayTracer.cpp
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/RayTracer.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Rectangle.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Shape.h
-CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Sphere.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -1704,10 +1691,18 @@ CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/src/plug
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/json.hpp
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/simpleppm.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/AreaLight.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Light.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/PointLight.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Ray.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/RayTracer.cpp
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/RayTracer.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Rectangle.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Shape.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Sphere.h
 
-CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Rectangle.cpp
-CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Rectangle.h
-CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Shape.h
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -1915,9 +1910,10 @@ CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/src/plug
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Rectangle.cpp
+CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Rectangle.h
+CMakeFiles/raytracer.dir/src/Rectangle.cpp.o: ../src/Shape.h
 
-CMakeFiles/raytracer.dir/src/Shape.cpp.o: ../src/Shape.cpp
-CMakeFiles/raytracer.dir/src/Shape.cpp.o: ../src/Shape.h
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -2125,10 +2121,9 @@ CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/src/plugins/
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/Shape.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/Shape.cpp.o: ../src/Shape.cpp
+CMakeFiles/raytracer.dir/src/Shape.cpp.o: ../src/Shape.h
 
-CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Shape.h
-CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Sphere.cpp
-CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Sphere.h
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/Dense
@@ -2336,4 +2331,7 @@ CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/src/plugins
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/raytracer.dir/src/Sphere.cpp.o: /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Shape.h
+CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Sphere.cpp
+CMakeFiles/raytracer.dir/src/Sphere.cpp.o: ../src/Sphere.h
 

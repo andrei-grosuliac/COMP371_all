@@ -23,4 +23,10 @@ Rectangle::Rectangle(float p1a, float p1b, float p1c, float p2a, float p2b, floa
     this->p4[2] = p4c;
 
     this->type = "rectangle";
+
+    this->u = this->p2 - this->p1;
+    this->v = this->p3 - this->p1;
+    this->normal = this->u.cross(this->v);
+    this->distanceToOrigin = this->p1.dot(this->normal);
+
 }
