@@ -35,6 +35,7 @@ class RayTracer {
         Vector3f rayCast(Ray ray);
         Vector3f compute_color(Shape shape, Vector3f intersection_pt, Vector3f normal, Ray ray);
         Vector3f clamp(Vector3f color, float min, float max);
+        bool testShadow(Ray &ray);
 
         vector<Sphere> spheres;
         vector<Rectangle> rectangles;

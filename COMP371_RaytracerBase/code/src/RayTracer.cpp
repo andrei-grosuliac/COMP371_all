@@ -219,13 +219,14 @@ Vector3f RayTracer::compute_color(Shape shape, Vector3f intersection_pt, Vector3
         Vector3f L = light.centre - intersection_pt; 
         L = L.normalized();
         Ray ptL(intersection_pt, L);
-        if (normal.dot(L) > 0) {
+        if (normal.dot(L) > 0 && !testShadow(ptL)) {
             diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L))* shape.kd;
 
             // Calculate specular illumination
             Vector3f Cv = ray.p - intersection_pt; 
             Cv = Cv.normalized();
             Vector3f Rv = (2 * normal * normal.dot(L)) - L;
+            Rv = Rv.normalized();
             if (Cv.dot(Rv) > 0) {
                 specular += (shape.sc).cwiseProduct(light.is * pow(Cv.dot(Rv), shape.pc))* shape.ks;
             }
@@ -251,4 +252,25 @@ Vector3f RayTracer::clamp(Vector3f v, float min, float max) {
         }
     }
     return v;
+}
+
+bool RayTracer::testShadow(Ray &ray) {
+
+    // Iterate over every face in every sphere and rectangle to test for ray intersection
+    float t = 0.0;
+    for (const auto& sphere : spheres) {
+        if (sphereIntersection(ray, sphere, t)) {
+          if(t>0.00001)
+            return true;
+        }
+    }
+    for (const auto& rectangle : rectangles) {
+        if (rectangleIntersection(ray, rectangle, t)) {
+          if(t>0.00001)
+            return true;
+        }
+    }
+
+    // Return false if no intersection was found
+    return false;
 }
