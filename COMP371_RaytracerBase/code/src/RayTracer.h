@@ -35,7 +35,13 @@ class RayTracer {
         Vector3f rayCast(Ray ray);
         Vector3f compute_color(Shape shape, Vector3f intersection_pt, Vector3f normal, Ray ray);
         Vector3f clamp(Vector3f color, float min, float max);
-        bool testShadow(Ray &ray);
+        bool testShadow(Ray &ray, float max_distance);
+        float random_float();
+        Vector3f sample_hemisphere(const Vector3f& normal);
+        bool intersect_scene(Ray ray, Shape& hit_shape, Vector3f& intersection_pt, Vector3f& normal);
+        Vector3f path_trace(Ray& ray, int depth);
+        Ray jitter_ray(const Ray& original_ray, float random_offset_x, float random_offset_y);
+        void coordinate_system(Vector3f original_ray_d, Vector3f& u, Vector3f& v, Vector3f& w);
 
         vector<Sphere> spheres;
         vector<Rectangle> rectangles;
@@ -43,6 +49,10 @@ class RayTracer {
         vector<AreaLight> areaLights;
         string filename;
         int size [2];
+        int raysperpixel [2];
+        bool globalIllumination;
+        int maxBounces;
+        float probTerminate;
 
         Vector3f lookat, up, center, ai, bkc;
         //Vector3f color;

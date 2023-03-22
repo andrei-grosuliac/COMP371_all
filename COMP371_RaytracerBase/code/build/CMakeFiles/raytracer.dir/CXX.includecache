@@ -425,6 +425,8 @@ AreaLight.h
 /COMP371/COMP371_RaytracerBase/code/src/AreaLight.h
 PointLight.h
 /COMP371/COMP371_RaytracerBase/code/src/PointLight.h
+random
+-
 
 /COMP371/COMP371_RaytracerBase/code/src/RayTracer.h
 vector
