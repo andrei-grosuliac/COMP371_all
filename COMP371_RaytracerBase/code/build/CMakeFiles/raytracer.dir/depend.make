@@ -639,6 +639,7 @@ CMakeFiles/raytracer.dir/main.cpp.o: ../external/json.hpp
 CMakeFiles/raytracer.dir/main.cpp.o: ../external/simpleppm.h
 CMakeFiles/raytracer.dir/main.cpp.o: ../main.cpp
 CMakeFiles/raytracer.dir/main.cpp.o: ../src/AreaLight.h
+CMakeFiles/raytracer.dir/main.cpp.o: ../src/File.h
 CMakeFiles/raytracer.dir/main.cpp.o: ../src/Light.h
 CMakeFiles/raytracer.dir/main.cpp.o: ../src/PointLight.h
 CMakeFiles/raytracer.dir/main.cpp.o: ../src/Ray.h
@@ -1489,6 +1490,7 @@ CMakeFiles/raytracer.dir/src/PointLight.cpp.o: /usr/include/eigen3/Eigen/src/plu
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/json.hpp
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../external/simpleppm.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/AreaLight.h
+CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/File.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Light.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/PointLight.h
 CMakeFiles/raytracer.dir/src/RayTracer.cpp.o: ../src/Ray.h

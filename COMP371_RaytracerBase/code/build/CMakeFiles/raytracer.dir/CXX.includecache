@@ -388,6 +388,12 @@ Eigen/Dense
 Light.h
 /COMP371/COMP371_RaytracerBase/code/src/Light.h
 
+/COMP371/COMP371_RaytracerBase/code/src/File.h
+Eigen/Core
+-
+Eigen/Dense
+-
+
 /COMP371/COMP371_RaytracerBase/code/src/Light.h
 iostream
 -
@@ -461,6 +467,8 @@ Sphere.h
 /COMP371/COMP371_RaytracerBase/code/src/Sphere.h
 Rectangle.h
 /COMP371/COMP371_RaytracerBase/code/src/Rectangle.h
+File.h
+/COMP371/COMP371_RaytracerBase/code/src/File.h
 ../external/json.hpp
 /COMP371/COMP371_RaytracerBase/code/external/json.hpp
 ../external/simpleppm.h

@@ -95,82 +95,86 @@ void RayTracer::createLights(const json& scene) {
 }
 
 void RayTracer::createOutputs(const json& scene){
-  for (auto& output : scene["output"]) {
-    filename = output["filename"];
-    size[0] = output["size"][0];
-    size[1] = output["size"][1];
+  for (auto& file : scene["output"]) {
+      File f;
+      f.filename = file["filename"];
+      f.size[0] = file["size"][0];
+      f.size[1] = file["size"][1];
 
-    lookat = Vector3f(output["lookat"][0], output["lookat"][1], output["lookat"][2]);
-    up = Vector3f(output["up"][0], output["up"][1], output["up"][2]);
-    center = Vector3f(output["centre"][0], output["centre"][1], output["centre"][2]);
-    bkc = Vector3f(output["bkc"][0], output["bkc"][1], output["bkc"][2]);
-    fov = output["fov"];
-    try{
-      if(output.contains("raysperpixel")){
-        raysperpixel[0] = output["raysperpixel"][0];
-        raysperpixel[1] = output["raysperpixel"][1];
+      f.lookat = Vector3f(file["lookat"][0], file["lookat"][1], file["lookat"][2]);
+      f.up = Vector3f(file["up"][0], file["up"][1], file["up"][2]);
+      f.center = Vector3f(file["centre"][0], file["centre"][1], file["centre"][2]);
+      f.bkc = Vector3f(file["bkc"][0], file["bkc"][1], file["bkc"][2]);
+      f.fov = file["fov"];
+      try{
+        if(file.contains("raysperpixel")){
+          f.raysperpixel[0] = file["raysperpixel"][0];
+          f.raysperpixel[1] = file["raysperpixel"][1];
+        }
+        if(file.contains("globalillum")){
+          f.globalIllumination = file["globalillum"];
+        }
+        if(file.contains("maxbounces")){
+          f.maxBounces = file["maxbounces"];
+        }
+        if(file.contains("probterminate")){
+          f.probTerminate = file["probterminate"];
+        }
+      }catch(...){
+        cout<<"Error while parsing: Unknown output type"<<endl;
+        f.globalIllumination = false;
+        f.maxBounces = 1;
+        f.probTerminate = 0.0;
+        f.raysperpixel[0] = 4;
+        f.raysperpixel[1] = 4;        
       }
-      if(output.contains("globalillum")){
-        globalIllumination = output["globalillum"];
-      }
-      if(output.contains("maxbounces")){
-        maxBounces = output["maxbounces"];
-      }
-      if(output.contains("probterminate")){
-        probTerminate = output["probterminate"];
-      }
-    }catch(...){
-      cout<<"Error while parsing: Unknown output type"<<endl;
-      globalIllumination = false;
-      maxBounces = 1;
-      probTerminate = 0.0;
-      raysperpixel[0] = 4;
-      raysperpixel[1] = 4;
-    }
+      files.push_back(f);        
   }
 }
 
 void RayTracer::run() {
-    cout<<"Running ray tracer"<<endl;    
+    for (auto& file : files) {
+        cout<<"Running ray tracer"<<endl;    
 
-    float width = size[0];
-    float height = size[1];
-    vector<double> buffer(3*width*height);
+        float width = file.size[0];
+        float height = file.size[1];
+        vector<double> buffer(3*width*height);
 
-    int numThreads = std::thread::hardware_concurrency(); // Get the number of supported threads
-    //numThreads = 1; // Get the number of supported threads
-    std::vector<std::thread> threads(numThreads);         // Create a vector of threads
+        int numThreads = std::thread::hardware_concurrency(); // Get the number of supported threads
+        //numThreads = 1; // Get the number of supported threads
+        std::vector<std::thread> threads(numThreads);         // Create a vector of threads
 
-    int sectionHeight = height / numThreads; // Divide the image into sections
+        int sectionHeight = height / numThreads; // Divide the image into sections
 
-    // Create and launch threads
-    for (int i = 0; i < numThreads; i++) {
-        int startY = i * sectionHeight;
-        int endY = (i == numThreads - 1) ? height : (i + 1) * sectionHeight;
-        threads[i] = std::thread(&RayTracer::render_section, this, startY, endY, width, height, std::ref(buffer));
+        // Create and launch threads
+        for (int i = 0; i < numThreads; i++) {
+            int startY = i * sectionHeight;
+            int endY = (i == numThreads - 1) ? height : (i + 1) * sectionHeight;
+            threads[i] = std::thread(&RayTracer::render_section, this, startY, endY, width, height, std::ref(buffer),  std::ref(file));
+        }
+
+        // Join the threads (wait for them to finish)
+        for (auto& thread : threads) {
+            thread.join();
+        }
+
+        save_ppm(file.filename, buffer, width, height);
     }
-
-    // Join the threads (wait for them to finish)
-    for (auto& thread : threads) {
-        thread.join();
-    }
-
-    save_ppm(filename, buffer, width, height);
-    //testHemisphere();
+    
 }
 
-void RayTracer::render_section(int startY, int endY, int imageWidth, int imageHeight, vector<double>& buffer) {
+void RayTracer::render_section(int startY, int endY, int imageWidth, int imageHeight, vector<double>& buffer, File& file) {
     for (int y = startY; y < endY; y++) {
         for (int x = 0; x < imageWidth; x++) {
            //compute direction vector for each ray
-            Vector3f right = lookat.cross(up).normalized();
-            float delta = 2.0 * tan((fov * M_PI / 180.0) / 2.0) / imageHeight;
+            Vector3f right = file.lookat.cross(file.up).normalized();
+            float delta = 2.0 * tan((file.fov * M_PI / 180.0) / 2.0) / imageHeight;
 
             //formula given in the lectures
-            Vector3f direction = lookat + tan((fov * M_PI / 180.0) / 2.0) * up - imageWidth/2.0 * delta * right + (x * delta + delta/2.0)*right - (y*delta+delta/2.0)*up;
+            Vector3f direction = file.lookat + tan((file.fov * M_PI / 180.0) / 2.0) * file.up - imageWidth/2.0 * delta * right + (x * delta + delta/2.0)*right - (y*delta+delta/2.0)*file.up;
             direction = direction.normalized();
-            Ray ray(center, direction);
-            Vector3f color = rayCast(ray);
+            Ray ray(file.center, direction);
+            Vector3f color = rayCast(ray, file);
 
             buffer[3*y*imageWidth+3*x+0] = color[0];
             buffer[3*y*imageWidth+3*x+1] = color[1];
@@ -179,20 +183,20 @@ void RayTracer::render_section(int startY, int endY, int imageWidth, int imageHe
     }
 }
 
-Vector3f RayTracer::rayCast(Ray& ray){
+Vector3f RayTracer::rayCast(Ray& ray, File& file){
     Vector3f intersection_point(0,0,0);
     Shape closest_shape;
     bool intersectionFound = false;
     Vector3f normal(0, 0, 0);
     Vector3f color(0, 0, 0);
 
-    if(globalIllumination){
+    if(file.globalIllumination){
         // Compute the color of the ray using path tracing
-        int N = raysperpixel[0] * raysperpixel[1];
+        int N = file.raysperpixel[0] * file.raysperpixel[1];
         for (int i = 0; i < N; i++) {
               
               // Accumulate color from path tracing
-              color += path_trace(ray, 0);
+              color += path_trace(ray, 0, file);
         }
         // Divide by the total number of samples to get the average color
         color /= N;
@@ -203,10 +207,10 @@ Vector3f RayTracer::rayCast(Ray& ray){
         // Compute the color of the ray using ray tracing
         intersectionFound = intersect_scene(ray, closest_shape, intersection_point, normal);
         if (intersectionFound){
-          color = compute_color(closest_shape, intersection_point, normal, ray);
+          color = compute_color(closest_shape, intersection_point, normal, ray, file);
         }
         else{
-          color = bkc;
+          color = file.bkc;
         }
     }
     return color;
@@ -286,22 +290,19 @@ bool RayTracer::rectangleIntersection(Ray& ray, Rectangle& rectangle, float& t) 
 
     if (u >= 0.0f && u <= 1.0f && v >= 0.0f && v <= 1.0f) {
         return true;
-        // if(debug && bounce>0){
-        //   cout<<"Ray at: "<<intersection_point<<endl;
-        // }
     }
 
     return false;
 }
 
-Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vector3f& normal, Ray& ray) {
+Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vector3f& normal, Ray& ray, File& file) {
     Vector3f color(0.0, 0.0, 0.0);    
     Vector3f diffuse(0.0, 0.0, 0.0);
     Vector3f specular(0.0, 0.0, 0.0);
     Vector3f ambient(0.0, 0.0, 0.0);
 
     // Compute the ambient color
-    if(!globalIllumination){
+    if(!file.globalIllumination){
       ambient = shape.ka * shape.ac;
     }
 
@@ -315,7 +316,7 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
           diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L))* shape.kd;
 
           // Calculate specular illumination
-          if(!globalIllumination){            
+          if(!file.globalIllumination){            
             Vector3f Cv = ray.p - intersection_pt; 
             Cv = Cv.normalized();
             Vector3f H = (L+Cv)/(L+Cv).norm();
@@ -328,7 +329,7 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
     }
 
     for (AreaLight light : areaLights) {
-      if(light.useCenter || globalIllumination){
+      if(light.useCenter || file.globalIllumination){
 
         light.GetCenter();
         Vector3f L = light.centre - intersection_pt; 
@@ -341,7 +342,7 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
           // Calculate diffuse illumination
           diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L))* shape.kd;
 
-          if(!globalIllumination){
+          if(!file.globalIllumination){
             // Calculate specular illumination
             Vector3f Cv = ray.p - intersection_pt; 
             Cv = Cv.normalized();
@@ -355,12 +356,11 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
         }
       }
       else{
-        int a = raysperpixel[0];
-        int b = raysperpixel[1];
+        int a = file.raysperpixel[0];
+        int b = file.raysperpixel[1];
 
         for (int i = 0; i < a; ++i) {
-          for (int j = 0; j < a; ++j) {
-            for (int k = 0; k < b; ++k) {
+          for (int j = 0; j < b; ++j) {
               float u = (i + random_float()) / (float)a;
               float v = (j + random_float()) / (float)a;
               
@@ -371,21 +371,21 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
               
               Ray ptL(intersection_pt + L * 1e-3, L);
               if (normal.dot(L) > 0 && !testShadow(ptL, max_distance)) {
-                diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L)) * shape.kd / (a * a * b);
+                diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L)) * shape.kd / (a * b);
 
                 Vector3f Cv = ray.p - intersection_pt;
                 Cv = Cv.normalized();
                 Vector3f H = (L + Cv) / (L + Cv).norm();
                 if (H.dot(normal) > 0) {
-                  specular += (shape.sc).cwiseProduct(light.is * pow(H.dot(normal), shape.pc)) * shape.ks / (a * a * b);
+                  specular += (shape.sc).cwiseProduct(light.is * pow(H.dot(normal), shape.pc)) * shape.ks / (a * b);
                 }
               }
-            }
+            
           }
         }
       }
     }
-    if(!globalIllumination){
+    if(!file.globalIllumination){
     color = ambient + diffuse + specular;
     }
     else{
@@ -398,8 +398,8 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
     return color;
 }
 
-Vector3f RayTracer::path_trace(Ray& ray, int depth) {
-    if (depth >= maxBounces) {
+Vector3f RayTracer::path_trace(Ray& ray, int depth, File& file) {
+    if (depth >= file.maxBounces) {
         return Vector3f(0.0, 0.0, 0.0);
     }
    
@@ -407,17 +407,17 @@ Vector3f RayTracer::path_trace(Ray& ray, int depth) {
     Vector3f intersection_pt(0,0,0);
     Vector3f normal(0,0,0);
     if (!intersect_scene(ray, hit_shape, intersection_pt, normal)) {
-      return bkc;
+      return file.bkc;
     }
     
     Vector3f direct_illumination(0.0, 0.0, 0.0);
     Vector3f indirect_illumination(0.0, 0.0, 0.0);
 
     //Calculate direct illumination from point/area lights (diffuse only)
-    direct_illumination = compute_color(hit_shape, intersection_pt, normal, ray); 
+    direct_illumination = compute_color(hit_shape, intersection_pt, normal, ray, file); 
     
     //Russian Roulette termination
-    if (random_float() < probTerminate) {      
+    if (random_float() < file.probTerminate) {      
       return direct_illumination;
     }
     //Sample a random direction for the next ray bounce
@@ -431,7 +431,7 @@ Vector3f RayTracer::path_trace(Ray& ray, int depth) {
 
     //Create the next ray
     Ray next_ray(intersection_pt + wi * 1e-3, wi);
-    indirect_illumination += ((brdf.cwiseProduct(path_trace(next_ray, depth + 1)) * cos_theta * (2*M_PI)));
+    indirect_illumination += ((brdf.cwiseProduct(path_trace(next_ray, depth + 1, file)) * cos_theta * (2*M_PI)));
     
     return (direct_illumination + indirect_illumination);
 }

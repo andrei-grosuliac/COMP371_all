@@ -640,6 +640,7 @@ CMakeFiles/raytracer.dir/main.cpp.o
  /COMP371/COMP371_RaytracerBase/code/external/simpleppm.h
  /COMP371/COMP371_RaytracerBase/code/main.cpp
  /COMP371/COMP371_RaytracerBase/code/src/AreaLight.h
+ /COMP371/COMP371_RaytracerBase/code/src/File.h
  /COMP371/COMP371_RaytracerBase/code/src/Light.h
  /COMP371/COMP371_RaytracerBase/code/src/PointLight.h
  /COMP371/COMP371_RaytracerBase/code/src/Ray.h
@@ -1490,6 +1491,7 @@ CMakeFiles/raytracer.dir/src/RayTracer.cpp.o
  /COMP371/COMP371_RaytracerBase/code/external/json.hpp
  /COMP371/COMP371_RaytracerBase/code/external/simpleppm.h
  /COMP371/COMP371_RaytracerBase/code/src/AreaLight.h
+ /COMP371/COMP371_RaytracerBase/code/src/File.h
  /COMP371/COMP371_RaytracerBase/code/src/Light.h
  /COMP371/COMP371_RaytracerBase/code/src/PointLight.h
  /COMP371/COMP371_RaytracerBase/code/src/Ray.h
