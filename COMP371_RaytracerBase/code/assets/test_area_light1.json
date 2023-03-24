@@ -63,7 +63,7 @@
         "bkc":[0.5,0.5,0.5],
 
         "globalillum": false,
-        "raysperpixel": [4, 4]
+        "raysperpixel": [7, 7]
     }
     ]
 }
