@@ -433,12 +433,6 @@ PointLight.h
 /COMP371/COMP371_RaytracerBase/code/src/PointLight.h
 random
 -
-thread
--
-vector
--
-pthread.h
--
 
 /COMP371/COMP371_RaytracerBase/code/src/RayTracer.h
 vector

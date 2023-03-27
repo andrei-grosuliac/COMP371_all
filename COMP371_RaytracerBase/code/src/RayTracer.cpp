@@ -4,9 +4,8 @@
 #include "AreaLight.h"
 #include "PointLight.h"
 #include <random>
-#include <thread>
-#include <vector>
-#include <pthread.h>
+//#include <thread>
+//#include <pthread.h>
 
 using json = nlohmann::json;
 using Vector3f = Eigen::Vector3f;
@@ -111,8 +110,15 @@ void RayTracer::createOutputs(const json& scene){
           f.raysperpixel[0] = file["raysperpixel"][0];
           f.raysperpixel[1] = file["raysperpixel"][1];
         }
+        else{
+          f.raysperpixel[0] = 5;
+          f.raysperpixel[1] = 5;
+        }
         if(file.contains("globalillum")){
           f.globalIllumination = file["globalillum"];
+        }
+        else{
+          f.globalIllumination = false;
         }
         if(file.contains("maxbounces")){
           f.maxBounces = file["maxbounces"];
@@ -120,13 +126,20 @@ void RayTracer::createOutputs(const json& scene){
         if(file.contains("probterminate")){
           f.probTerminate = file["probterminate"];
         }
+        if(file.contains("antialiasing")){
+          f.antiAliasing = file["antialiasing"];
+        }
+        else{
+          f.antiAliasing = false;
+        }
       }catch(...){
         cout<<"Error while parsing: Unknown output type"<<endl;
         f.globalIllumination = false;
         f.maxBounces = 1;
+        f.antiAliasing = false;
         f.probTerminate = 0.0;
-        f.raysperpixel[0] = 4;
-        f.raysperpixel[1] = 4;        
+        f.raysperpixel[0] = 5;
+        f.raysperpixel[1] = 5;        
       }
       files.push_back(f);        
   }
@@ -134,29 +147,34 @@ void RayTracer::createOutputs(const json& scene){
 
 void RayTracer::run() {
     for (auto& file : files) {
+      checkAreaLights(file);
         cout<<"Running ray tracer"<<endl;    
 
         float width = file.size[0];
         float height = file.size[1];
         vector<double> buffer(3*width*height);
 
-        int numThreads = std::thread::hardware_concurrency(); // Get the number of supported threads
-        //numThreads = 1; // Get the number of supported threads
-        std::vector<std::thread> threads(numThreads);         // Create a vector of threads
+        //Uncomment to use multithreading
 
-        int sectionHeight = height / numThreads; // Divide the image into sections
+        //int numThreads = std::thread::hardware_concurrency(); // Get the number of supported threads
+        //numThreads = 1; // Get the number of supported threads
+        //std::vector<std::thread> threads(numThreads);         // Create a vector of threads
+
+        //int sectionHeight = height / numThreads; // Divide the image into sections
 
         // Create and launch threads
-        for (int i = 0; i < numThreads; i++) {
-            int startY = i * sectionHeight;
-            int endY = (i == numThreads - 1) ? height : (i + 1) * sectionHeight;
-            threads[i] = std::thread(&RayTracer::render_section, this, startY, endY, width, height, std::ref(buffer),  std::ref(file));
-        }
+        //for (int i = 0; i < numThreads; i++) {
+            //int startY = i * sectionHeight;
+           // int endY = (i == numThreads - 1) ? height : (i + 1) * sectionHeight;
+           // threads[i] = std::thread(&RayTracer::render_section, this, startY, endY, width, height, std::ref(buffer),  std::ref(file));
+        //}
 
         // Join the threads (wait for them to finish)
-        for (auto& thread : threads) {
-            thread.join();
-        }
+        //for (auto& thread : threads) {
+        //    thread.join();
+        //}
+
+        render_section(0, 0, width, height, buffer, file);
 
         save_ppm(file.filename, buffer, width, height);
     }
@@ -164,23 +182,70 @@ void RayTracer::run() {
 }
 
 void RayTracer::render_section(int startY, int endY, int imageWidth, int imageHeight, vector<double>& buffer, File& file) {
-    for (int y = startY; y < endY; y++) {
-        for (int x = 0; x < imageWidth; x++) {
-           //compute direction vector for each ray
+    int numSamples = file.raysperpixel[0];
+    int raysPerCell = file.raysperpixel[1];
+    for (int y = 0; y < imageHeight; y++) {
+        for (int x = 0; x < imageWidth; x++) {          
+          Vector3f accumulated_color(0, 0, 0);
+
+          if(file.antiAliasing || file.globalIllumination){
+            for (int sy = 0; sy < numSamples; sy++) {
+              for (int sx = 0; sx < numSamples; sx++) {
+                for (int i = 0; i < raysPerCell; ++i) {
+                  // Stratify the pixel by dividing it into a grid
+                  float u = (sx + random_float()) / numSamples;
+                  float v = (sy + random_float()) / numSamples;
+
+                  // Compute direction vector for each ray
+                  Vector3f right = file.lookat.cross(file.up).normalized();
+                  float delta = 2.0 * tan((file.fov * M_PI / 180.0) / 2.0) / imageHeight;
+
+                  // Formula given in the lectures, modified to use stratified sampling
+                  Vector3f direction = file.lookat + tan((file.fov * M_PI / 180.0) / 2.0) * file.up
+                      - imageWidth / 2.0 * delta * right
+                      + ((x + u) * delta) * right
+                      - ((y + v) * delta) * file.up;
+                  direction = direction.normalized();
+
+                  Ray ray(file.center, direction);
+                  Vector3f color = rayCast(ray, file);
+
+                  accumulated_color += color;
+                }
+              }
+            }
+            // Average the accumulated color
+            accumulated_color /= (numSamples * numSamples * raysPerCell);
+          }
+          else{
+            // Compute direction vector for each ray
             Vector3f right = file.lookat.cross(file.up).normalized();
             float delta = 2.0 * tan((file.fov * M_PI / 180.0) / 2.0) / imageHeight;
 
-            //formula given in the lectures
-            Vector3f direction = file.lookat + tan((file.fov * M_PI / 180.0) / 2.0) * file.up - imageWidth/2.0 * delta * right + (x * delta + delta/2.0)*right - (y*delta+delta/2.0)*file.up;
+            // Formula given in the lectures, modified to use stratified sampling
+            Vector3f direction = file.lookat + tan((file.fov * M_PI / 180.0) / 2.0) * file.up
+                - imageWidth / 2.0 * delta * right
+                + (x * delta) * right
+                - (y * delta) * file.up;
             direction = direction.normalized();
-            Ray ray(file.center, direction);
-            Vector3f color = rayCast(ray, file);
 
-            buffer[3*y*imageWidth+3*x+0] = color[0];
-            buffer[3*y*imageWidth+3*x+1] = color[1];
-            buffer[3*y*imageWidth+3*x+2] = color[2];
+            Ray ray(file.center, direction);
+            accumulated_color = rayCast(ray, file);
+          }            
+
+          buffer[3 * y * imageWidth + 3 * x + 0] = accumulated_color[0];
+          buffer[3 * y * imageWidth + 3 * x + 1] = accumulated_color[1];
+          buffer[3 * y * imageWidth + 3 * x + 2] = accumulated_color[2];
         }
     }
+}
+
+void RayTracer::checkAreaLights(File& file){
+  for (auto& light: areaLights){
+    if (!light.useCenter){
+      file.antiAliasing = false;
+    }
+  }
 }
 
 Vector3f RayTracer::rayCast(Ray& ray, File& file){
@@ -191,17 +256,8 @@ Vector3f RayTracer::rayCast(Ray& ray, File& file){
     Vector3f color(0, 0, 0);
 
     if(file.globalIllumination){
-        // Compute the color of the ray using path tracing
-        int N = file.raysperpixel[0] * file.raysperpixel[1];
-        for (int i = 0; i < N; i++) {
-              
-              // Accumulate color from path tracing
-              color += path_trace(ray, 0, file);
-        }
-        // Divide by the total number of samples to get the average color
-        color /= N;
-        color = clamp(color, 0.0, 1.0);
-        
+        color = path_trace(ray, 0, file);
+        color = clamp(color, 0.0, 1.0);        
     }
     else{
         // Compute the color of the ray using ray tracing
@@ -360,7 +416,8 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
         int b = file.raysperpixel[1];
 
         for (int i = 0; i < a; ++i) {
-          for (int j = 0; j < b; ++j) {
+          for (int i = 0; i < a; ++i) {
+            for (int j = 0; j < b; ++j) {
               float u = (i + random_float()) / (float)a;
               float v = (j + random_float()) / (float)a;
               
@@ -371,16 +428,16 @@ Vector3f RayTracer::compute_color(Shape& shape, Vector3f& intersection_pt, Vecto
               
               Ray ptL(intersection_pt + L * 1e-3, L);
               if (normal.dot(L) > 0 && !testShadow(ptL, max_distance)) {
-                diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L)) * shape.kd / (a * b);
+                diffuse += (shape.dc).cwiseProduct(light.id * normal.dot(L)) * shape.kd / (a * a * b);
 
                 Vector3f Cv = ray.p - intersection_pt;
                 Cv = Cv.normalized();
                 Vector3f H = (L + Cv) / (L + Cv).norm();
                 if (H.dot(normal) > 0) {
-                  specular += (shape.sc).cwiseProduct(light.is * pow(H.dot(normal), shape.pc)) * shape.ks / (a * b);
+                  specular += (shape.sc).cwiseProduct(light.is * pow(H.dot(normal), shape.pc)) * shape.ks / (a * a * b);
                 }
               }
-            
+            }            
           }
         }
       }

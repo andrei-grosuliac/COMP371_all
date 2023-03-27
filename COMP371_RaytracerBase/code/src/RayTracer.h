@@ -42,10 +42,12 @@ class RayTracer {
         Vector3f path_trace(Ray& ray, int depth, File& file);
         int testHemisphere();
         void render_section(int startY, int endY, int imageWidth, int imageHeight, vector<double>& buffer, File& file);
+        void checkAreaLights(File& file);
 
         vector<Sphere> spheres;
         vector<Rectangle> rectangles;
         vector<PointLight> pointLights;
         vector<AreaLight> areaLights;
-        vector<File> files;  
+        vector<File> files;
+
 };

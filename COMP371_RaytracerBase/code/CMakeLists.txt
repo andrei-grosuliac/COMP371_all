@@ -22,7 +22,7 @@ add_compile_options(-DSTUDENT_SOLUTION)
 # When testing large scenes the debug mode will be very slow
 # so switch to release
 #set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -55,6 +55,6 @@ aux_source_directory(src SOURCE)
 
 add_executable(raytracer main.cpp ${SOURCE}) #The name of the cpp file and its path can vary
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-target_link_libraries(raytracer Threads::Threads )
+#set(THREADS_PREFER_PTHREAD_FLAG ON)
+#find_package(Threads REQUIRED)
+#target_link_libraries(raytracer Threads::Threads )

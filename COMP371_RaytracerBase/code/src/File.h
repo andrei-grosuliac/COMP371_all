@@ -10,6 +10,7 @@ class File {
         bool globalIllumination;
         int maxBounces;
         float probTerminate;
+        bool antiAliasing;
 
         Vector3f lookat, up, center, ai, bkc;
 
