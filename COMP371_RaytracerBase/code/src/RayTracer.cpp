@@ -310,6 +310,9 @@ bool RayTracer::sphereIntersection(Ray& ray, Sphere& sphere, float& t) {
     }
     else {
         t = (-b - sqrt(discriminant)) / (2.0 * a);
+		if(t<0.001){
+		  return false;
+		}
         return true;
     }
 }
